@@ -186,7 +186,10 @@ app = create_app()
 
 # async_mode="threading" evita depender de eventlet, que aún no es
 # compatible con versiones recientes de Python (como 3.14). El modo
-# "threading" usa hilos nativos de Python y no requiere librerías extra.
+# "threading" usa hilos nativos de Python. Con el paquete
+# "simple-websocket" instalado (ver requirements.txt), este modo
+# soporta WebSocket real además de long-polling, mucho más liviano
+# en memoria que depender solo de polling.
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 
 register_room_events(socketio)

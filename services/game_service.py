@@ -33,13 +33,17 @@ def start_game(room_code: str, player_id: str) -> dict:
     """
     Marca la sala como "playing" y prepara el contador de rondas.
     Solo el anfitrión puede iniciar la partida.
-    """
-    if not is_host(room_code, player_id):
-        raise RoomError("Solo el anfitrión puede iniciar la partida.")
 
+    Nota de rendimiento: se pide el documento de la sala UNA sola vez
+    (antes se pedía dos veces: una para is_host() y otra por separado),
+    para ahorrar un viaje de ida y vuelta a Firestore en cada inicio de
+    partida.
+    """
     room = get_room(room_code)
     if room is None:
         raise RoomError("La sala no existe.")
+    if room.get("host_id") != player_id:
+        raise RoomError("Solo el anfitrión puede iniciar la partida.")
     if room.get("status") == "playing":
         raise RoomError("La partida ya está en curso.")
     if room.get("status") == "finished":

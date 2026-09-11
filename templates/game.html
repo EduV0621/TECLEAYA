@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Escribiendo · TecleaYa{% endblock %}
+
+{% block content %}
+<div
+    id="game-root"
+    class="game-screen"
+    data-room-code="{{ room_code }}"
+    data-player-id="{{ player_id }}"
+    data-player-name="{{ player_name }}"
+    data-index-url="{{ url_for('index') }}"
+>
+    <div class="game-topbar">
+        <span class="lobby-label">Sala {{ room_code }}</span>
+        <span id="round-indicator" class="round-indicator">Ronda — de —</span>
+        <span id="timer-display" class="timer-display">00:00.00</span>
+        <button id="leave-game-btn" class="btn btn-secondary btn-small">🚪 Abandonar</button>
+    </div>
+
+    <div class="progress-track">
+        <div id="progress-fill" class="progress-fill"></div>
+    </div>
+    <span id="progress-label" class="progress-label">Progreso: 0 %</span>
+
+    <div id="waiting-panel" class="card center-screen-inner">
+        <p>⏳ Esperando a que comience la ronda…</p>
+    </div>
+
+    <div id="typing-panel" class="card typing-panel hidden">
+        <p id="text-to-type" class="text-to-type"></p>
+
+        <input
+            id="typing-input"
+            class="typing-input-catcher"
+            type="text"
+            placeholder="Toca aquí y empieza a escribir…"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            inputmode="text"
+            disabled
+        >
+
+        <p id="finish-status" class="footnote hidden"></p>
+
+        <ul id="live-finishers" class="scoreboard hidden"></ul>
+    </div>
+
+    <div id="round-finished-panel" class="card hidden">
+        <h2 class="section-title">🏆 ¡Ronda terminada!</h2>
+        <p id="round-finished-summary" class="subtitle"></p>
+        <ul id="round-finished-list" class="scoreboard"></ul>
+
+        <button id="continue-round-btn" class="btn btn-primary btn-full">Continuar ronda</button>
+        <ul id="ready-list" class="ready-list"></ul>
+    </div>
+
+    <div id="countdown-overlay" class="countdown-overlay hidden">
+        <div id="countdown-number" class="countdown-number">3</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}

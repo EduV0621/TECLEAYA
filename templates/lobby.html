@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Sala {{ room_code }} · TecleaYa{% endblock %}
+
+{% block content %}
+<div
+    id="lobby-root"
+    class="lobby-screen"
+    data-room-code="{{ room_code }}"
+    data-player-id="{{ player_id }}"
+    data-player-name="{{ player_name }}"
+    data-is-host="{{ 'true' if is_host else 'false' }}"
+    data-game-url="{{ url_for('game', room_code=room_code) }}"
+>
+    <div class="lobby-header">
+        <div>
+            <span class="lobby-label">Sala</span>
+            <h1 class="room-code-display">{{ room_code }}</h1>
+        </div>
+        <button id="copy-code-btn" class="btn btn-secondary btn-small">Copiar código</button>
+    </div>
+
+    <div class="lobby-columns">
+        <div class="card">
+            <h2 class="section-title">👥 Jugadores <span id="player-count">(0)</span></h2>
+            <ul id="players-list" class="players-list">
+                <!-- Se llena dinámicamente vía Socket.IO -->
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">⚙️ Configuración de la partida</h2>
+
+            <div id="settings-form" class="stack settings-form">
+                <div class="setting-group">
+                    <label>🔁 Número de rondas</label>
+                    <div class="chip-row" data-setting="rounds">
+                        <button type="button" class="chip" data-value="5">5</button>
+                        <button type="button" class="chip" data-value="7">7</button>
+                        <button type="button" class="chip" data-value="10">10</button>
+                        <button type="button" class="chip" data-value="12">12</button>
+                    </div>
+                    <input type="number" id="custom-rounds" min="1" max="30" placeholder="Personalizado" class="custom-input">
+                </div>
+
+                <div class="setting-group">
+                    <label>🎯 Modo de juego</label>
+                    <div class="chip-row" data-setting="mode">
+                        <button type="button" class="chip" data-value="all_finish">Todos pueden terminar</button>
+                        <button type="button" class="chip" data-value="first_wins">El primero termina la ronda</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>📝 Longitud del texto</label>
+                    <div class="chip-row" data-setting="length">
+                        <button type="button" class="chip" data-value="short">Corto</button>
+                        <button type="button" class="chip" data-value="medium">Medio</button>
+                        <button type="button" class="chip" data-value="long">Largo</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>✍️ Tildes</label>
+                    <div class="chip-row" data-setting="accents_required">
+                        <button type="button" class="chip" data-value="true">Obligatorias</button>
+                        <button type="button" class="chip" data-value="false">No obligatorias</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>Ñ</label>
+                    <div class="chip-row" data-setting="use_enye">
+                        <button type="button" class="chip" data-value="true">Permitida</button>
+                        <button type="button" class="chip" data-value="false">No utilizar</button>
+                    </div>
+                </div>
+            </div>
+
+            <p id="settings-readonly-note" class="footnote hidden">
+                Solo el anfitrión puede cambiar la configuración.
+            </p>
+
+            <button id="start-game-btn" class="btn btn-primary btn-full hidden">🚀 Iniciar partida</button>
+            <p id="waiting-host-note" class="footnote hidden">Esperando a que el anfitrión inicie la partida…</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/lobby.js') }}"></script>
+{% endblock %}

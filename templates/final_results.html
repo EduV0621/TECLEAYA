@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Ranking final · TecleaYa{% endblock %}
+
+{% block content %}
+<div class="center-screen">
+    <div class="card card--wide">
+        <div class="brand-icon">🏆</div>
+        <h1 class="game-title-small" style="text-align:center;">Resultados finales</h1>
+        <p class="subtitle">Sala {{ room_code }}</p>
+
+        <ol class="scoreboard">
+            {% for player in scoreboard %}
+            <li class="scoreboard-item {{ 'scoreboard-item--first' if loop.index == 1 else '' }}">
+                <span class="scoreboard-position">
+                    {% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% elif loop.index == 3 %}🥉{% else %}{{ loop.index }}{% endif %}
+                </span>
+                <span class="scoreboard-name">{{ player.name }}{% if player.is_host %} 👑{% endif %}{% if not player.connected %} <span class="footnote-inline">(desconectado)</span>{% endif %}</span>
+                <span class="scoreboard-score">{{ player.score }} pts</span>
+            </li>
+            {% endfor %}
+        </ol>
+
+        <a href="{{ url_for('room_details', room_code=room_code) }}" class="btn btn-secondary btn-full">📋 Ver detalles</a>
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-full">🏠 Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}

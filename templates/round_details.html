@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Detalles de la partida · TecleaYa{% endblock %}
+
+{% block content %}
+<div class="center-screen">
+    <div class="card card--wide">
+        <h1 class="game-title-small" style="text-align:center;">📋 Detalles de la partida</h1>
+        <p class="subtitle">Sala {{ room_code }}</p>
+
+        {% for round in rounds %}
+        <div class="round-block">
+            <h2 class="section-title">🔁 Ronda {{ round.round_number }}</h2>
+            <ul class="scoreboard">
+                {% for entry in round.results %}
+                <li class="scoreboard-item {{ 'scoreboard-item--first' if entry.order == 1 else '' }}">
+                    <span class="scoreboard-position">
+                        {% if entry.order == 1 %}🥇{% elif entry.order == 2 %}🥈{% elif entry.order == 3 %}🥉{% else %}{{ entry.order }}{% endif %}
+                    </span>
+                    <span class="scoreboard-name">
+                        {{ entry.player_name }} —
+                        {{ "%.2f"|format(entry.time_seconds) if entry.time_seconds is not none else "—" }} s
+                    </span>
+                    <span class="scoreboard-score">+{{ entry.points }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p class="subtitle">Todavía no hay rondas jugadas en esta sala.</p>
+        {% endfor %}
+
+        <a href="{{ url_for('final_results', room_code=room_code) }}" class="btn btn-primary btn-full">🏆 Volver al ranking</a>
+    </div>
+</div>
+{% endblock %}

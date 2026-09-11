@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}TecleaYa · Inicio{% endblock %}
+
+{% block content %}
+<div class="center-screen">
+    <div class="card card--wide">
+        <div class="brand-icon">⌨️</div>
+        <h1 class="game-title">TecleaYa</h1>
+        <p class="subtitle">Compite escribiendo el mismo texto que tus amigos.</p>
+
+        <form id="create-form" action="{{ url_for('create_room') }}" method="POST" class="stack">
+            <div class="field">
+                <label for="player_name">Tu nombre</label>
+                <input
+                    type="text"
+                    id="player_name"
+                    name="player_name"
+                    maxlength="18"
+                    placeholder="Tu nombre"
+                    autocomplete="off"
+                    required
+                >
+            </div>
+
+            <div class="button-row">
+                <button type="submit" class="btn btn-primary">🎮 Crear sala</button>
+                <button type="button" id="join-btn" class="btn btn-secondary" data-join-url="{{ url_for('join_room_route') }}">🔑 Unirse a una sala</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

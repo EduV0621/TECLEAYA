@@ -1,0 +1,24 @@
+# Entorno virtual / dependencias
+venv/
+env/
+.venv/
+
+# Variables de entorno reales (NUNCA subir esto)
+.env
+
+# Credenciales de Firebase descargadas como JSON
+*serviceAccount*.json
+firebase-adminsdk*.json
+*.json.bak
+
+# Cache de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Sistema operativo / editor
+.DS_Store
+.vscode/
+.idea/
+*.log

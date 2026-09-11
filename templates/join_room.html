@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}TecleaYa · Unirse a sala{% endblock %}
+
+{% block content %}
+<div class="center-screen">
+    <div class="card">
+        <div class="brand-icon">🔑</div>
+        <h1 class="game-title-small" style="text-align:center;">Unirse a sala</h1>
+        <p class="subtitle">Introduce tu nombre y el código que te compartieron.</p>
+
+        <form action="{{ url_for('join_room_route') }}" method="POST" class="stack">
+            <div class="field">
+                <label for="player_name">Tu nombre</label>
+                <input
+                    type="text"
+                    id="player_name"
+                    name="player_name"
+                    maxlength="18"
+                    value="{{ player_name or '' }}"
+                    placeholder="Tu nombre"
+                    autocomplete="off"
+                    required
+                >
+            </div>
+
+            <div class="field">
+                <label for="room_code">Código de sala</label>
+                <input
+                    type="text"
+                    id="room_code"
+                    name="room_code"
+                    maxlength="6"
+                    value="{{ room_code or '' }}"
+                    placeholder="K7X92P"
+                    autocomplete="off"
+                    class="room-code-input"
+                    required
+                >
+            </div>
+
+            <div class="button-row">
+                <button type="submit" class="btn btn-primary">🚀 Entrar a la sala</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">← Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Acerca de TecleaYa{% endblock %}
+
+{% block content %}
+<div class="center-screen">
+    <div class="card card--wide">
+        <div class="brand-icon">⌨️</div>
+        <h1 class="game-title-small" style="text-align:center;">Acerca de TecleaYa</h1>
+        <p class="subtitle">
+            TecleaYa es un juego de mecanografía multijugador en tiempo real.
+            Crea una sala, invita a tus amigos con un código y compitan
+            escribiendo el mismo texto lo más rápido y correctamente posible.
+        </p>
+        <p class="subtitle">
+            Los textos se generan de forma procedural combinando vocabulario
+            real y distintas estructuras gramaticales, así que casi nunca vas
+            a repetir el mismo texto dos veces.
+        </p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-full">🏠 Volver al inicio</a>
+    </div>
+</div>
+{% endblock %}
